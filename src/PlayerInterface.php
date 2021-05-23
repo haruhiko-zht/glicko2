@@ -8,7 +8,7 @@ interface PlayerInterface
 {
     public function getRating(): float;
 
-    public function getRd(): float;
+    public function getRD(): float;
 
     public function getSigma(): float;
 

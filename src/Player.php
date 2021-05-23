@@ -56,7 +56,7 @@ class Player implements PlayerInterface
     /**
      * @return float rating deviation (= RD)
      */
-    public function getRd(): float
+    public function getRD(): float
     {
         return $this->rd;
     }
