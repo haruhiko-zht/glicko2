@@ -8,7 +8,7 @@ namespace HaruhikoZHT\Glicko2;
  * Class Matches
  * @package HaruhikoZHT\Glicko2
  */
-class Matches
+class Matches implements MatchesInterface
 {
     /**
      * @var float system constant τ , which constrains the change in volatility over time
