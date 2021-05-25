@@ -4,6 +4,10 @@
 namespace HaruhikoZHT\Glicko2;
 
 
+/**
+ * Class Player
+ * @package HaruhikoZHT\Glicko2
+ */
 class Player implements PlayerInterface
 {
     /**
@@ -12,26 +16,26 @@ class Player implements PlayerInterface
     protected float $rating;
 
     /**
-     * @var float rating deviation (= RD)
+     * @var float RD (= rating deviation)
      */
     protected float $rd;
 
     /**
-     * @var float volatility (= σ)
+     * @var float σ (= volatility)
      */
     protected float $sigma;
 
     /**
-     * @var PlayerInterface|null previous player instance
+     * @var PlayerInterface|null
      */
     protected ?PlayerInterface $previous;
 
     /**
      * Player constructor.
      * @param float $rating player rating
-     * @param float $rd rating deviation (= RD)
-     * @param float $sigma volatility (= σ)
-     * @param PlayerInterface|null $previous previous player instance
+     * @param float $rd RD (= rating deviation)
+     * @param float $sigma σ (= volatility)
+     * @param PlayerInterface|null $previous previous
      */
     public function __construct(
         float $rating = 1500.0,
@@ -45,35 +49,32 @@ class Player implements PlayerInterface
         $this->previous = $previous;
     }
 
-    /**
-     * @return float player rating
-     */
     public function getRating(): float
     {
         return $this->rating;
     }
 
-    /**
-     * @return float rating deviation (= RD)
-     */
     public function getRD(): float
     {
         return $this->rd;
     }
 
-    /**
-     * @return float volatility (= σ)
-     */
     public function getSigma(): float
     {
         return $this->sigma;
     }
 
-    /**
-     * @return PlayerInterface|null previous player instance
-     */
     public function getPrevious(): ?PlayerInterface
     {
         return $this->previous;
+    }
+
+    public function update(PlayerInterface $player): PlayerInterface
+    {
+        $this->previous = new static($this->rating, $this->rd, $this->sigma);
+        $this->rating = $player->getRating();
+        $this->rd = $player->getRD();
+        $this->sigma = $player->getSigma();
+        return $this;
     }
 }
