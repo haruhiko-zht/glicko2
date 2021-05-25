@@ -13,6 +13,8 @@
     "php": ">=8.0.0"
   },
   "autoload": {
-    "HaruhikoZHT\\Glicko2\\": "src"
+    "psr-4": {
+      "HaruhikoZHT\\Glicko2\\": "src/"
+    }
   }
 }
