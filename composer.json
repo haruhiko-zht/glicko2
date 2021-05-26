@@ -1,14 +1,19 @@
 {
   "name": "haruhiko-zht/glicko2",
-  "description": "Glicko2 rating system by PHP8",
-  "minimum-stability": "dev",
-  "license": "proprietary",
+  "description": "Glicko2 rating system implements by PHP",
+  "minimum-stability": "stable",
+  "license": "MIT",
   "authors": [
     {
-      "name": "haruhiko",
+      "name": "haruhiko-zht",
       "email": "psp.in.haruhiko@gmail.com"
     }
   ],
+  "autoload": {
+    "psr-4": {
+      "HaruhikoZHT\\Glicko2\\": "src/"
+    }
+  },
   "require": {
     "php": ">=8.0.0"
   },
