@@ -1,7 +1,7 @@
 haruhiko-zht/glicko2
 ===
 
-[Glicko-2 rating system](http://glicko.net/glicko.html)
+[Glicko-2 rating system](http://glicko.net/glicko.html) implements by PHP
 
 ## Description
 
@@ -59,4 +59,13 @@ $calculator->updateRating();
 
 ## Feature
 
-I want to be able to calculate Glicko-2 rates from results that don't involve direct confrontation (such as ranking by score).
+I want to be able to calculate Glicko-2 rates from results that don't involve direct confrontation (such as ranking by
+score).
+
+## LICENSE
+
+This software is released under the MIT License, see LICENSE.
+
+## Author
+
+[haruhiko-zht](https://github.com/haruhiko-zht)
