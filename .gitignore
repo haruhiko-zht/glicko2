@@ -3,5 +3,9 @@
 /.idea/
 ###< PhpStorm
 
+###> phpunit/phpunit
+.phpunit.result.cache
+###< phpunit/phpunit
+
 /vendor/
 composer.lock
