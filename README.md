@@ -3,6 +3,8 @@ haruhiko-zht/glicko2
 
 [Glicko-2 rating system](http://glicko.net/glicko.html) implements by PHP
 
+**This library is making and not stable, so still don't use.**
+
 ## Description
 
 This is Glicko-2 rating system calculator.
@@ -64,7 +66,7 @@ score).
 
 ## LICENSE
 
-This software is released under the MIT License, see LICENSE.
+This library is released under the MIT License, see LICENSE.
 
 ## Author
 
