@@ -64,6 +64,8 @@ $calculator->updateRating();
 I want to be able to calculate Glicko-2 rates from results that don't involve direct confrontation (such as ranking by
 score).
 
+I'm not very familiar with math, but I'm worried about significant figures and errors.
+
 ## LICENSE
 
 This library is released under the MIT License, see LICENSE.
