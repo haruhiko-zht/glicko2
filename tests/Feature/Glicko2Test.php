@@ -30,13 +30,20 @@ class Glicko2Test extends TestCase
                     'bar' => new Player(1400, 30, 0.06),
                     'baz' => new Player(1550, 100, 0.06),
                     'qux' => new Player(1700, 300, 0.06),
+                    'quux' => new Player(2000, 100, 0.06)
                 ],
                 [
                     new MatchResult($players['foo'], 80, $players['bar'], 20),
                     new MatchResult($players['foo'], 60, $players['baz'], 90),
                     new MatchResult($players['foo'], 30, $players['qux'], 100),
                 ],
-                ['foo' => new Player(1464.06, 151.52, 0.05999)]
+                [
+                    'foo' => new Player(1464.06, 151.52, 0.05999),
+                    'bar' => new Player(1398.14, 31.67, 0.059999),
+                    'baz' => new Player(1570.39, 97.71, 0.059999),
+                    'qux' => new Player(1784.42, 251.57, 0.059999),
+                    'quux' => new Player(2000, 100.54, 0.06),
+                ]
             ]
         ];
     }
