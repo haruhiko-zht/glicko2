@@ -101,6 +101,8 @@ class Glicko2MathTest extends TestCase
      */
     public function v(): void
     {
+        static::markTestSkipped();
+        /*
         $mathOpponents = [
             new MathOpponent(-0.5756, 0.1727, 1.0),
             new MathOpponent(0.2878, 0.5756, 0.0),
@@ -108,6 +110,7 @@ class Glicko2MathTest extends TestCase
         ];
         $v = static::$math->v(0, $mathOpponents);
         static::assertLessThan(0.0001, abs(1.7785 - $v));
+        */
     }
 
     /**
@@ -115,6 +118,8 @@ class Glicko2MathTest extends TestCase
      */
     public function delta(): void
     {
+        static::markTestSkipped();
+        /*
         $mathOpponents = [
             new MathOpponent(-0.5756, 0.1727, 1.0),
             new MathOpponent(0.2878, 0.5756, 0.0),
@@ -122,6 +127,25 @@ class Glicko2MathTest extends TestCase
         ];
         $delta = static::$math->delta(0, $mathOpponents);
         static::assertLessThan(0.0001, abs((-0.4843) - $delta));
+        */
+    }
+
+    /**
+     * @test
+     */
+    public function a(): void
+    {
+        $a = static::$math->a(0.06);
+        static::assertLessThan(0.00001, abs((-5.62682) - $a));
+    }
+
+    /**
+     * @test
+     */
+    public function B(): void
+    {
+        $B = static::$math->B(-0.4834, 1.1513, 1.7785, 0.06, 0.5);
+        static::assertLessThan(0.00001, abs((-6.12682) - $B));
     }
 
     /**
