@@ -21,10 +21,10 @@ class Glicko2MathTest extends TestCase
     public function muProvider(): array
     {
         return [
-            [1500, 0],
-            [1400, -0.5756],
-            [1550, 0.2878],
-            [1700, 1.1513],
+            ['r' => 1500, 'expected' => 0],
+            ['r' => 1400, 'expected' => -0.5756],
+            ['r' => 1550, 'expected' => 0.2878],
+            ['r' => 1700, 'expected' => 1.1513],
         ];
     }
 
@@ -41,10 +41,10 @@ class Glicko2MathTest extends TestCase
     public function phiProvider(): array
     {
         return [
-            [200, 1.1513],
-            [30, 0.1727],
-            [100, 0.5756],
-            [300, 1.7269],
+            ['RD' => 200, 'expected' => 1.1513],
+            ['RD' => 30, 'expected' => 0.1727],
+            ['RD' => 100, 'expected' => 0.5756],
+            ['RD' => 300, 'expected' => 1.7269],
         ];
     }
 
@@ -61,9 +61,9 @@ class Glicko2MathTest extends TestCase
     public function gProvider(): array
     {
         return [
-            [0.1727, 0.9955],
-            [0.5756, 0.9531],
-            [1.7269, 0.7242],
+            ['phi' => 0.1727, 'expected' => 0.9955],
+            ['phi' => 0.5756, 'expected' => 0.9531],
+            ['phi' => 1.7269, 'expected' => 0.7242],
         ];
     }
 
@@ -80,9 +80,9 @@ class Glicko2MathTest extends TestCase
     public function EProvider(): array
     {
         return [
-            [0, -0.5756, 0.1727, 0.639],
-            [0, 0.2878, 0.5756, 0.432],
-            [0, 1.1513, 1.7269, 0.303],
+            ['mu' => 0, 'opponent_mu' => -0.5756, 'opponent_phi' => 0.1727, 'expected' => 0.639],
+            ['mu' => 0, 'opponent_mu' => 0.2878, 'opponent_phi' => 0.5756, 'expected' => 0.432],
+            ['mu' => 0, 'opponent_mu' => 1.1513, 'opponent_phi' => 1.7269, 'expected' => 0.303],
         ];
     }
 
