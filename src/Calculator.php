@@ -27,17 +27,16 @@ class Calculator
 
     /**
      * Calculator constructor.
-     * @param MatchesInterface $matches
      * @param MathInterface|null $math
      */
-    public function __construct(MatchesInterface $matches, ?MathInterface $math = null)
+    public function __construct(?MathInterface $math = null)
     {
-        $this->matches = $matches;
         $this->math = $math ?? new Math();
     }
 
-    public function updateRating(): array
+    public function updateRating(MatchesInterface $matches): array
     {
+        $this->matches = $matches;
         $this->addResultsToPlayers();
 
         $new_players = [];

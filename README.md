@@ -48,8 +48,8 @@ $matches->addPlayers($players);
 $matches->addResults($results);
 
 // Prepare Calculator. Calculate rate and update.
-$calculator = new Calculator($matches);
-$calculator->updateRating();
+$calculator = new Calculator();
+$calculator->updateRating($matches);
 
 // After update rating
 // [foo] rating:1464.050671, RD:151.516524, σ:0.059996

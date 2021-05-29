@@ -37,8 +37,8 @@ $matches->addPlayers($players);
 $matches->addResults($results);
 
 // Prepare Calculator. Calculate rate and update.
-$calculator = new Calculator($matches);
-$calculator->updateRating();
+$calculator = new Calculator();
+$calculator->updateRating($matches);
 
 echo '==========AFTER==========', PHP_EOL;
 foreach ($players as $name => $player) {

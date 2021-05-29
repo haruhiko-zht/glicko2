@@ -18,7 +18,7 @@ class Glicko2Test extends TestCase
     protected function setUp(): void
     {
         $this->matches = new Matches();
-        $this->calculator = new Calculator($this->matches);
+        $this->calculator = new Calculator();
     }
 
     public function additionProvider(): array
@@ -60,7 +60,7 @@ class Glicko2Test extends TestCase
     {
         $this->matches->addPlayers($players);
         $this->matches->addResults($matches);
-        $this->calculator->updateRating();
+        $this->calculator->updateRating($this->matches);
 
         foreach ($expected as $k => $v) {
             self::assertLessThan(0.1, abs($v->getRating() - $players[$k]->getRating()));
