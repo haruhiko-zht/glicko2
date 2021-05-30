@@ -180,11 +180,22 @@ class Glicko2MathTest extends TestCase
      */
     public function new_mu(): void
     {
-        $mathOpponents = [
-            new MathOpponent(-0.5756, 0.1727, 1.0),
-            new MathOpponent(0.2878, 0.5756, 0.0),
-            new MathOpponent(1.1513, 1.7269, 0.0),
-        ];
+        $stubA = $this->createMock(MathOpponent::class);
+        $stubA->method('mu')->willReturn(-0.5756);
+        $stubA->method('phi')->willReturn(0.1727);
+        $stubA->method('s')->willReturn(1.0);
+
+        $stubB = $this->createMock(MathOpponent::class);
+        $stubB->method('mu')->willReturn(0.2878);
+        $stubB->method('phi')->willReturn(0.5756);
+        $stubB->method('s')->willReturn(0.0);
+
+        $stubC = $this->createMock(MathOpponent::class);
+        $stubC->method('mu')->willReturn(1.1513);
+        $stubC->method('phi')->willReturn(1.7269);
+        $stubC->method('s')->willReturn(0.0);
+
+        $mathOpponents = [$stubA, $stubB, $stubC];
         $new_mu = static::$math->new_mu(0, 0.8722, $mathOpponents);
         static::assertLessThan(0.0001, abs((-0.2069) - $new_mu));
     }
