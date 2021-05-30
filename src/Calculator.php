@@ -21,11 +21,6 @@ class Calculator
     protected MathInterface $math;
 
     /**
-     * @var PlayerDetailInterface[]
-     */
-    protected array $join_players_detail = [];
-
-    /**
      * Calculator constructor.
      * @param MathInterface|null $math
      */
@@ -34,63 +29,79 @@ class Calculator
         $this->math = $math ?? new Math();
     }
 
+    /**
+     * @param MatchesInterface $matches
+     * @return PlayerInterface[]
+     */
     public function updateRating(MatchesInterface $matches): array
     {
         $this->matches = $matches;
-        $this->addResultsToPlayers();
 
-        $new_players = [];
-        foreach ($this->join_players_detail as $player_detail) {
-            $new_players[] = $this->calcRating($player_detail);
-        }
+        $player_details = $this->addResultsToPlayerDetails(
+            $this->createPlayerDetails($this->matches->getPlayers()),
+            $this->matches->getResults()
+        );
 
-        $joins = array_map(static fn($player_detail) => $player_detail->getPlayer(), $this->join_players_detail);
-        $not_joins = array_udiff($this->matches->getPlayers(), $joins, static fn($a, $b) => ($a === $b) ? 0 : -1);
+        $calculated_players = array_map(fn($player_detail) => $this->calcRating($player_detail), $player_details);
 
-        foreach ($not_joins as $not_join) {
-            $player_detail = new PlayerDetail($not_join);
-            $new_players[] = $this->calcRating($player_detail);
-        }
-
-        foreach ($new_players as $player) {
-            $res = $player->getPrevious()?->update($player);
-        }
+        array_map(
+            static fn($calculated_player) => $calculated_player->getPrevious()?->update($calculated_player),
+            $calculated_players
+        );
 
         return $this->matches->getPlayers();
     }
 
-    protected function addResultsToPlayers(): void
+    /**
+     * @param PlayerDetailInterface[] $player_details
+     * @param MatchResult[] $results
+     * @return PlayerDetailInterface[]
+     */
+    protected function addResultsToPlayerDetails(array $player_details, array $results): array
     {
-        foreach ($this->matches->getResults() as $result) {
+        foreach ($results as $result) {
             $player_s = $this->math->s($result->getPlayerScore(), $result->getOpponentScore());
             $opponent_s = $this->math->s($result->getOpponentScore(), $result->getPlayerScore());
 
-            $filtered = array_filter(
-                $this->join_players_detail,
-                static fn($player_detail) => $player_detail->getPlayer() === $result->getPlayer()
-            );
-
-            if (empty($filtered)) {
-                $tmp = new PlayerDetail($result->getPlayer());
-                $tmp->addResult($result->getOpponent(), $player_s);
-                $this->join_players_detail[] = $tmp;
-            } else {
-                $filtered[0]->addResult($result->getOpponent(), $player_s);
+            $player_detail = $this->searchPlayerDetail($result->getPlayer(), $player_details);
+            if (is_null($player_detail)) {
+                $player_detail = new PlayerDetail($result->getPlayer());
             }
+            $player_detail->addResult($result->getOpponent(), $player_s);
 
-            $filtered = array_filter(
-                $this->join_players_detail,
-                static fn($player_detail) => $player_detail->getPlayer() === $result->getOpponent()
-            );
-
-            if (empty($filtered)) {
-                $tmp = new PlayerDetail($result->getOpponent());
-                $tmp->addResult($result->getPlayer(), $opponent_s);
-                $this->join_players_detail[] = $tmp;
-            } else {
-                $filtered[0]->addResult($result->getPlayer(), $opponent_s);
+            $player_detail = $this->searchPlayerDetail($result->getOpponent(), $player_details);
+            if (is_null($player_detail)) {
+                $player_detail = new PlayerDetail($result->getOpponent());
             }
+            $player_detail->addResult($result->getPlayer(), $opponent_s);
         }
+        return $player_details;
+    }
+
+    /**
+     * @param PlayerInterface[] $players
+     * @return PlayerDetailInterface[]
+     */
+    protected function createPlayerDetails(array $players): array
+    {
+        return array_map(static fn($player) => new PlayerDetail($player), $players);
+    }
+
+    /**
+     * @param PlayerInterface $player
+     * @param PlayerDetailInterface[] $player_details
+     * @return PlayerDetailInterface|null
+     */
+    protected function searchPlayerDetail(PlayerInterface $player, array $player_details): ?PlayerDetailInterface
+    {
+        $filtered = array_filter(
+            $player_details,
+            static fn($participant) => $participant->getPlayer() === $player
+        );
+
+        return (empty($filtered))
+            ? null
+            : array_shift($filtered);
     }
 
     protected function calcRating(PlayerDetailInterface $player_detail): PlayerInterface
