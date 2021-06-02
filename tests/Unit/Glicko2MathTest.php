@@ -98,6 +98,7 @@ class Glicko2MathTest extends TestCase
 
     /**
      * @test
+     * @todo considering error
      */
     public function v(): void
     {
@@ -115,6 +116,7 @@ class Glicko2MathTest extends TestCase
 
     /**
      * @test
+     * @todo considering error
      */
     public function delta(): void
     {
